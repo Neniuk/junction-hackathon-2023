@@ -4,6 +4,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #F4F4F6;
 }
 
 a {
@@ -19,6 +20,7 @@ textarea {
   font-size: 40px;
   margin-top: -600px;
   border: 3px solid;
+  background-color: #F4F4F6;
 }
 
 button {
@@ -29,4 +31,5 @@ button {
   font-size: 25px;
   margin-top: -600px;
   border: 3px solid;
+  background-color: #F4F4F6;
 }
