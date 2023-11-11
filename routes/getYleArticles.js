@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var puppeteer = require("puppeteer");
+const dotenv = require("dotenv");
 
 const englishEnergyArticles = "https://yle.fi/news/18-40146";
 const finnishEnergyArticles = "https://yle.fi/uutiset/18-796";
