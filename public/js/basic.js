@@ -37,7 +37,7 @@ async function initializeCode() {
 		return inputText;
 	}
 
-	const summarized = await summarizeArticles();
+	// const summarized = await summarizeArticles();
 
 	// endTime, startTime, value, variableID
 	// const data = await postOllama(
@@ -78,17 +78,27 @@ async function initializeCode() {
 						position: 'bottom',
 						title: {
 							display: true,
-							text: 'Time'
+							text: 'Time',
+							font: {
+								size: 18, 
+								weight: 'bold', 
+							},
 						}
 					},
 					y: {
 						type: 'linear',
 						title: {
 							display: true,
-							text: 'Price'
+							text: 'Material Price Data',
+							font: {
+								size: 18, 
+								weight: 'bold', 
+							},
 						}
 					}
-				}
+				},
+				responsive: true,
+				maintainAspectRatio: false,
 			}
 		}
 	);
