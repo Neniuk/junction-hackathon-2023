@@ -1,7 +1,7 @@
 import { getElectricityPrices } from "./electricityPriceAPI.js";
 import { getMaterialData } from "./materialData.js";
 import { postOllama } from "./ollamaAPI.js";
-import Chart from "/chart.js/auto";
+// import Chart from 'chart.js/auto'
 
 
 // import { post } from "../../app.js";
@@ -41,19 +41,20 @@ async function initializeCode() {
 	// 	false
 	// );
 	// console.log("data: ", data);
-	console.log("materialData: ", await materialData.materials);
+	console.log("materialData: ", await materialData.materials[2]);
+	// console.log("timeData: ", await materialData.materials.timeData);
 
 	
 new Chart(
 	document.getElementById('myChart'),
 		{
 		  type: 'line',
-		  data: {
-			labels: data.map(entry => entry.timeData), 
+		  materialData: {
+			labels: materialData.map(entry => entry.timeData), 
 			datasets: [
 			  {
 				label: 'Material Price Data',
-				data: data.map(entry => entry.priceData),
+				materialData: materialData.map(entry => entry.priceData),
 				fill: false,
 				borderColor: 'rgba(75, 192, 192, 1)',
 				borderWidth: 2,
