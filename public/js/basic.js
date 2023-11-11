@@ -44,17 +44,17 @@ async function initializeCode() {
 	// 	false
 	// );
 	// console.log("data: ", data);
-	console.log("materialData: ", await materialData.materials[2]);
+	console.log("materialData: ", materialData.materials[2);
 	// console.log("timeData: ", await materialData.materials.timeData);
 
 	new Chart(document.getElementById("myChart"), {
 		type: "line",
 		materialData: {
-			labels: materialData.map((entry) => entry.timeData),
+			labels: materialData.materials.map((entry) => entry.timeData),
 			datasets: [
 				{
 					label: "Material Price Data",
-					materialData: materialData.map((entry) => entry.priceData),
+					materialData: materialData.materials.map((entry) => entry.priceData),
 					fill: false,
 					borderColor: "rgba(75, 192, 192, 1)",
 					borderWidth: 2,
