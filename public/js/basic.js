@@ -30,8 +30,12 @@ async function initializeCode() {
 		aiResponseBox.value = aiResponse;
 	});
 
+	// Testing >
 	const articles = await getYleArticles();
-	// console.log("articles: ", articles);
+	console.log("articles: ", articles);
+	const materials = await getMaterialData();
+	console.log("materials: ", materials);
+	// < Testing
 
 	async function processInput(inputText) {
 		return inputText;
@@ -47,75 +51,72 @@ async function initializeCode() {
 	// 	false
 	// );
 	// console.log("data: ", data);
-	 
+
 	// console.log("materialData: ", materialData.materials.timeData);
 	// console.log("timeData: ", await materialData.materials.timeData);
 
-	
-	new Chart(
-		document.getElementById('myChart'),
-		{
-			type: 'line',
-			materialData: {
-				labels: materialData.materials.map(entry => entry.timeData),
-				datasets: [
-					{
-						label: 'Material Price Data',
-						materialData: materialData.materials.map(entry => entry.priceData),
-						fill: false,
-						borderColor: 'rgba(75, 192, 192, 1)',
-						borderWidth: 2,
-						pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-						pointRadius: 5,
-						pointHoverRadius: 8,
-					}
-				]
-			},
-			options: {
-				scales: {
-					x: {
-						type: 'linear',
-						position: 'bottom',
-						title: {
-							display: true,
-							text: 'Time',
-							font: {
-								size: 18, 
-								weight: 'bold', 
-							},
-						}
-					},
-					y: {
-						type: 'linear',
-						title: {
-							display: true,
-							text: 'Material Price Data',
-							font: {
-								size: 18, 
-								weight: 'bold', 
-							},
-						}
-					}
+	new Chart(document.getElementById("myChart"), {
+		type: "line",
+		materialData: {
+			labels: materialData.materials.map((entry) => entry.timeData),
+			datasets: [
+				{
+					label: "Material Price Data",
+					materialData: materialData.materials.map(
+						(entry) => entry.priceData
+					),
+					fill: false,
+					borderColor: "rgba(75, 192, 192, 1)",
+					borderWidth: 2,
+					pointBackgroundColor: "rgba(75, 192, 192, 1)",
+					pointRadius: 5,
+					pointHoverRadius: 8,
 				},
-				responsive: true,
-				maintainAspectRatio: false,
-			}
-		}
-	);
+			],
+		},
+		options: {
+			scales: {
+				x: {
+					type: "linear",
+					position: "bottom",
+					title: {
+						display: true,
+						text: "Time",
+						font: {
+							size: 18,
+							weight: "bold",
+						},
+					},
+				},
+				y: {
+					type: "linear",
+					title: {
+						display: true,
+						text: "Material Price Data",
+						font: {
+							size: 18,
+							weight: "bold",
+						},
+					},
+				},
+			},
+			responsive: true,
+			maintainAspectRatio: false,
+		},
+	});
 
-const summarizeArticles = async () => {
-	const articles = await getYleArticles();
-	console.log("articles: ", articles);
+	const summarizeArticles = async () => {
+		const articles = await getYleArticles();
+		console.log("articles: ", articles);
 
-	const summarized = await postOllama(
-		"llama2",
-		articles.articles,
-		"According to the context provided later, give a short prediction of the energy market and its prices according to the articles in the context. ## CONTEXT ## " +
-			articles.articles +
-			" ## END CONTEXT ##",
-		true
-	);
-	return await summarized;
-};
-
+		const summarized = await postOllama(
+			"llama2",
+			articles.articles,
+			"According to the context provided later, give a short prediction of the energy market and its prices according to the articles in the context. ## CONTEXT ## " +
+				articles.articles +
+				" ## END CONTEXT ##",
+			true
+		);
+		return await summarized;
+	};
 }
