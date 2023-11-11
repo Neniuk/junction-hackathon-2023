@@ -30,11 +30,14 @@ async function initializeCode() {
 		aiResponseBox.value = aiResponse;
 	});
 
+	const articles = await getYleArticles();
+	// console.log("articles: ", articles);
+
 	async function processInput(inputText) {
 		return inputText;
 	}
 
-	const summarized = await summarizeArticles();
+	// const summarized = await summarizeArticles();
 
 	// endTime, startTime, value, variableID
 	// const data = await postOllama(
@@ -44,47 +47,61 @@ async function initializeCode() {
 	// 	false
 	// );
 	// console.log("data: ", data);
-	console.log("materialData: ", await materialData.materials[2]);
+	 
+	// console.log("materialData: ", materialData.materials.timeData);
 	// console.log("timeData: ", await materialData.materials.timeData);
 
-	new Chart(document.getElementById("myChart"), {
-		type: "line",
-		materialData: {
-			labels: materialData.map((entry) => entry.timeData),
-			datasets: [
-				{
-					label: "Material Price Data",
-					materialData: materialData.map((entry) => entry.priceData),
-					fill: false,
-					borderColor: "rgba(75, 192, 192, 1)",
-					borderWidth: 2,
-					pointBackgroundColor: "rgba(75, 192, 192, 1)",
-					pointRadius: 5,
-					pointHoverRadius: 8,
-				},
-			],
-		},
-		options: {
-			scales: {
-				x: {
-					type: "linear",
-					position: "bottom",
-					title: {
-						display: true,
-						text: "Time",
-					},
-				},
-				y: {
-					type: "linear",
-					title: {
-						display: true,
-						text: "Price",
-					},
-				},
+	
+	new Chart(
+		document.getElementById('myChart'),
+		{
+			type: 'line',
+			materialData: {
+				labels: materialData.materials.map(entry => entry.timeData),
+				datasets: [
+					{
+						label: 'Material Price Data',
+						materialData: materialData.materials.map(entry => entry.priceData),
+						fill: false,
+						borderColor: 'rgba(75, 192, 192, 1)',
+						borderWidth: 2,
+						pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+						pointRadius: 5,
+						pointHoverRadius: 8,
+					}
+				]
 			},
-		},
-	});
-}
+			options: {
+				scales: {
+					x: {
+						type: 'linear',
+						position: 'bottom',
+						title: {
+							display: true,
+							text: 'Time',
+							font: {
+								size: 18, 
+								weight: 'bold', 
+							},
+						}
+					},
+					y: {
+						type: 'linear',
+						title: {
+							display: true,
+							text: 'Material Price Data',
+							font: {
+								size: 18, 
+								weight: 'bold', 
+							},
+						}
+					}
+				},
+				responsive: true,
+				maintainAspectRatio: false,
+			}
+		}
+	);
 
 const summarizeArticles = async () => {
 	const articles = await getYleArticles();
@@ -100,3 +117,5 @@ const summarizeArticles = async () => {
 	);
 	return await summarized;
 };
+
+}
