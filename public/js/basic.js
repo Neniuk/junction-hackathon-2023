@@ -1,5 +1,5 @@
 import { getElectricityPrices } from "./electricityPriceAPI.js";
-const fs = require("fs");
+// const fs = require("fs");
 
 if (document.readyState !== "loading") {
 	console.log("Document ready");
@@ -13,6 +13,11 @@ if (document.readyState !== "loading") {
 
 async function initializeCode() {
 	var button = document.getElementById("input-button");
+	// var buttonAI = document.getElementById("fetch-ai");
+
+	// buttonAI.addEventListener("click", function () {
+	// 	let llama = fetch();
+	// });
 
 	button.addEventListener("click", function () {
 		var textareaContent = document.getElementById("input-area").value;
@@ -26,5 +31,5 @@ async function initializeCode() {
 		0
 	);
 
-	console.log(await data);
+	// console.log(await data);
 }
