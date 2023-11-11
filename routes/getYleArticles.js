@@ -13,7 +13,7 @@ async function startBrowser() {
 	try {
 		console.log("Opening the browser......");
 		browser = await puppeteer.launch({
-			headless: false,
+			headless: true,
 			args: ["--disable-setuid-sandbox"],
 			ignoreHTTPSErrors: true,
 		});
@@ -117,9 +117,9 @@ router.get("/", async function (req, res, next) {
 	// Join all articles into one single block of text
 	let allArticles = "";
 	for (let i = 0; i < message.articles.length; i++) {
-		message.articles[i] = message.articles[i].join(" ");
+		message.articles[i] = message.articles[i].join(" \n ");
 	}
-	allArticles = message.articles.join(" <br><br> ");
+	allArticles = message.articles.join(" \n\n<new-article>\n\n ");
 	message.articles = allArticles;
 	res.json(message);
 });
