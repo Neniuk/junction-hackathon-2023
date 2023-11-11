@@ -55,55 +55,69 @@ async function initializeCode() {
 	// console.log("materialData: ", materialData.materials.timeData);
 	// console.log("timeData: ", await materialData.materials.timeData);
 
-	new Chart(document.getElementById("myChart"), {
-		type: "line",
-		materialData: {
-			labels: materialData.materials.map((entry) => entry.timeData),
-			datasets: [
-				{
-					label: "Material Price Data",
-					materialData: materialData.materials.map(
-						(entry) => entry.priceData
-					),
+	console.log("materialData: ", materialData.materials);
+	new Chart(
+		document.getElementById('myChart'),
+		{
+			type: 'line',
+			data: {
+				labels: materialData.materials[0].timeData.map(year => parseInt(year)),
+				datasets: materialData.materials.map((material, index) => ({
+					label: index === 0 ? material.material : '',
+					data: material.priceData,
 					fill: false,
-					borderColor: "rgba(75, 192, 192, 1)",
+					borderColor: 'rgba(255, 99, 132, 1)', 
 					borderWidth: 2,
-					pointBackgroundColor: "rgba(75, 192, 192, 1)",
+					pointBackgroundColor: 'rgba(255, 99, 132, 1)', 
 					pointRadius: 5,
 					pointHoverRadius: 8,
-				},
-			],
-		},
-		options: {
-			scales: {
-				x: {
-					type: "linear",
-					position: "bottom",
-					title: {
-						display: true,
-						text: "Time",
-						font: {
-							size: 18,
-							weight: "bold",
-						},
-					},
-				},
-				y: {
-					type: "linear",
-					title: {
-						display: true,
-						text: "Material Price Data",
-						font: {
-							size: 18,
-							weight: "bold",
-						},
-					},
-				},
+				})),
 			},
-			responsive: true,
-			maintainAspectRatio: false,
-		},
-	});
+			options: {
+				scales: {
+					x: {
+						type: 'linear',
+						position: 'bottom',
+						title: {
+							display: true,
+							text: 'Time',
+							font: {
+								size: 22,
+							}
+						},
+						ticks: {
+							callback: function(value) {
+								return Number.isInteger(value) ? value : '';
+							}
+						}
+					},
+					y: {
+						type: 'linear',
+						title: {
+							display: true,
+							text: 'Price',
+							font: {
+								size: 22,
+							}
+						}
+					}
+				},
+				plugins: {
+					title: {
+						display: true,
+						text: 'Material Price Data',
+						font: {
+							size: 18,
+							weight: 'bold',
+						},
+					},
+				},
+				responsive: true,
+				maintainAspectRatio: false,
+			}
+		}
+	);
+	
 
 	const summarizeArticles = async () => {
 		const articles = await getYleArticles();
