@@ -15,16 +15,20 @@ if (document.readyState !== "loading") {
 
 async function initializeCode() {
 	var button = document.getElementById("input-button");
-	// var buttonAI = document.getElementById("fetch-ai");
+	// const materialData = await getMaterialData();
+	var aiResponseBox = document.getElementById("ai-response");
 
-	// buttonAI.addEventListener("click", function () {
-	// 	let llama = fetch();
-	// });
-
-	button.addEventListener("click", function () {
+	button.addEventListener("click", async function () {
 		var textareaContent = document.getElementById("input-area").value;
 		console.log("Textarea content: ", textareaContent);
+
+		const aiResponse = await processInput(textareaContent);
+		aiResponseBox.value = aiResponse;
 	});
+
+	async function processInput(inputText) {
+		return inputText;
+	}
 
 	// endTime, startTime, value, variableID
 	const data = await postOllama(
