@@ -30,8 +30,12 @@ async function initializeCode() {
 		aiResponseBox.value = aiResponse;
 	});
 
+	// Testing >
 	const articles = await getYleArticles();
-	// console.log("articles: ", articles);
+	console.log("articles: ", articles);
+	const materials = await getMaterialData();
+	console.log("materials: ", materials);
+	// < Testing
 
 	async function processInput(inputText) {
 		return inputText;
@@ -47,7 +51,7 @@ async function initializeCode() {
 	// 	false
 	// );
 	// console.log("data: ", data);
-	 
+
 	// console.log("materialData: ", materialData.materials.timeData);
 	// console.log("timeData: ", await materialData.materials.timeData);
 
@@ -115,19 +119,18 @@ async function initializeCode() {
 	);
 	
 
-const summarizeArticles = async () => {
-	const articles = await getYleArticles();
-	console.log("articles: ", articles);
+	const summarizeArticles = async () => {
+		const articles = await getYleArticles();
+		console.log("articles: ", articles);
 
-	const summarized = await postOllama(
-		"llama2",
-		articles.articles,
-		"According to the context provided later, give a short prediction of the energy market and its prices according to the articles in the context. ## CONTEXT ## " +
-			articles.articles +
-			" ## END CONTEXT ##",
-		true
-	);
-	return await summarized;
-};
-
+		const summarized = await postOllama(
+			"llama2",
+			articles.articles,
+			"According to the context provided later, give a short prediction of the energy market and its prices according to the articles in the context. ## CONTEXT ## " +
+				articles.articles +
+				" ## END CONTEXT ##",
+			true
+		);
+		return await summarized;
+	};
 }
