@@ -49,46 +49,46 @@ async function initializeCode() {
 	// console.log("timeData: ", await materialData.materials.timeData);
 
 	
-new Chart(
-	document.getElementById('myChart'),
+	new Chart(
+		document.getElementById('myChart'),
 		{
-		  type: 'line',
-		  materialData: {
-			labels: materialData.map(entry => entry.timeData), 
-			datasets: [
-			  {
-				label: 'Material Price Data',
-				materialData: materialData.map(entry => entry.priceData),
-				fill: false,
-				borderColor: 'rgba(75, 192, 192, 1)',
-				borderWidth: 2,
-				pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-				pointRadius: 5,
-				pointHoverRadius: 8,
-			  }
-			]
-		  },
-		  options: {
-			scales: {
-				x: {
-					type: "linear",
-					position: "bottom",
-					title: {
-						display: true,
-						text: "Time",
-					},
-				},
-				y: {
-					type: "linear",
-					title: {
-						display: true,
-						text: "Price",
-					},
-				},
+			type: 'line',
+			materialData: {
+				labels: materialData.materials.map(entry => entry.timeData),
+				datasets: [
+					{
+						label: 'Material Price Data',
+						materialData: materialData.materials.map(entry => entry.priceData),
+						fill: false,
+						borderColor: 'rgba(75, 192, 192, 1)',
+						borderWidth: 2,
+						pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+						pointRadius: 5,
+						pointHoverRadius: 8,
+					}
+				]
 			},
-		},
-	});
-}
+			options: {
+				scales: {
+					x: {
+						type: 'linear',
+						position: 'bottom',
+						title: {
+							display: true,
+							text: 'Time'
+						}
+					},
+					y: {
+						type: 'linear',
+						title: {
+							display: true,
+							text: 'Price'
+						}
+					}
+				}
+			}
+		}
+	);
 
 const summarizeArticles = async () => {
 	const articles = await getYleArticles();
@@ -104,3 +104,5 @@ const summarizeArticles = async () => {
 	);
 	return await summarized;
 };
+
+}
