@@ -61,48 +61,66 @@ async function initializeCode() {
 		{
 			type: 'line',
 			data: {
-				labels: materialData.materials[0].timeData.map(year => parseInt(year)),
-				datasets: materialData.materials.map((material, index) => ({
-					label: index === 0 ? material.material : '',
-					data: material.priceData,
-					fill: false,
-					borderColor: 'rgba(255, 99, 132, 1)', 
-					borderWidth: 2,
-					pointBackgroundColor: 'rgba(255, 99, 132, 1)', 
-					pointRadius: 5,
-					pointHoverRadius: 8,
-				})),
+				labels: materialData.materials[0].timeData,
+				datasets: materialData.materials.reverse().map((material, index) => {
+					let color;
+					switch (index) {
+						case 0:
+							color = 'red';
+							break;
+						case 1:
+							color = 'blue';
+							break;
+						case 2:
+							color = 'lime';
+							break;
+						// Add more cases for additional materials
+	
+						default:
+							color = getRandomColor(); // Use a fallback color if more materials than expected
+							break;
+					}
+	
+					return {
+						label: material.material,
+						data: material.priceData,
+						fill: false,
+						backgroundColor: color,
+						borderColor: color,
+						borderWidth: 2,
+						pointBackgroundColor: color,
+						pointRadius: 5,
+						pointHoverRadius: 8,
+					};
+				}),
 			},
 			options: {
 				scales: {
 					x: {
-						type: 'linear',
-						position: 'bottom',
 						title: {
 							display: true,
-							text: 'Time',
-							font: {
-								size: 22,
-							}
+							text: 'Time'
 						},
-						ticks: {
-							callback: function(value) {
-								return Number.isInteger(value) ? value : '';
-							}
-						}
 					},
 					y: {
-						type: 'linear',
 						title: {
 							display: true,
-							text: 'Price',
-							font: {
-								size: 22,
-							}
-						}
+							text: 'Price'
+						},
+						suggestedMin: 0,
+						suggestedMax: 20000,
 					}
 				},
 				plugins: {
+					legend: {
+						display: true,
+						position: 'top',
+						labels: {
+							font: {
+								size: 14,
+							},
+						},
+					},
 					title: {
 						display: true,
 						text: 'Material Price Data',
@@ -117,6 +135,7 @@ async function initializeCode() {
 			}
 		}
 	);
+	
 	
 
 	const summarizeArticles = async () => {
