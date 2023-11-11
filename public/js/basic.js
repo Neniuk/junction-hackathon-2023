@@ -4,7 +4,7 @@ import { postOllama } from "./ollamaAPI.js";
 // import Chart from 'chart.js/auto'
 
 import { getYleArticles, summarizeArticles } from "./articles.js";
-
+const summaryDiv = document.getElementById("summary");
 // import { post } from "../../app.js";
 
 if (document.readyState !== "loading") {
@@ -30,11 +30,13 @@ async function initializeCode() {
 		aiResponseBox.value = aiResponse;
 	});
 
+	const summary = await summarizeArticles();
+	summaryDiv.innerHTML = await summary;
+
 	// Testing >
 	// const articles = await getYleArticles();
 	// console.log("articles: ", articles);
-	const summarized = await summarizeArticles();
-	console.log("summarized: ", summarized);
+
 	const materials = await getMaterialData();
 	console.log("materials: ", materials);
 	// < Testing
@@ -142,19 +144,4 @@ async function initializeCode() {
 			maintainAspectRatio: false,
 		},
 	});
-
-	const summarizeArticles = async () => {
-		const articles = await getYleArticles();
-		console.log("articles: ", articles);
-
-		const summarized = await postOllama(
-			"llama2",
-			articles.articles,
-			"According to the context provided later, give a short prediction of the energy market and its prices according to the articles in the context. ## CONTEXT ## " +
-				articles.articles +
-				" ## END CONTEXT ##",
-			true
-		);
-		return await summarized;
-	};
 }
