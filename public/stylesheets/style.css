@@ -11,7 +11,7 @@ a {
 	color: #00b7ff;
 }
 
-textarea {
+#input-area {
 	width: 100%;
 	max-width: 350px;
 	padding: 2px;
@@ -24,6 +24,17 @@ textarea {
 	overflow-y: hidden;
 	position: relative;
 	z-index: 2;
+}
+
+#ai-response {
+	position: absolute;
+	background-color: #f4f4f6;
+	border: 1px solid;
+	max-width: 400px;
+	height: 600px;
+	margin-top: 100px;
+	margin-right: 26px;
+	font-size: 20px;
 }
 
 button {

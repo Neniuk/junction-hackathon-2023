@@ -1,6 +1,7 @@
 import { getElectricityPrices } from "./electricityPriceAPI.js";
 // const fs = require("fs");
 import { ollama } from "../../models/ollama.js";
+import { response } from "express";
 
 if (document.readyState !== "loading") {
 	console.log("Document ready");
@@ -14,16 +15,14 @@ if (document.readyState !== "loading") {
 
 async function initializeCode() {
 	var button = document.getElementById("input-button");
-	// var buttonAI = document.getElementById("fetch-ai");
-
-	// buttonAI.addEventListener("click", function () {
-	// 	let llama = fetch();
-	// });
+	var aiResponseBox = document.getElementById("ai-response");
+	
 
 	button.addEventListener("click", function () {
 		var textareaContent = document.getElementById("input-area").value;
 		console.log("Textarea content: ", textareaContent);
 	});
+
 
 	// endTime, startTime, value, variableID
 	const data = await getElectricityPrices(
@@ -37,3 +36,4 @@ async function initializeCode() {
 	const output = await ollama.generate("why is the sky blue");
 	console.log(output);
 }
+
