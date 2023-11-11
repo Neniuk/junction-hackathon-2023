@@ -46,6 +46,7 @@ router.post("/post", (req, res) => {
 				fileData = {
 					materials: [],
 				};
+				fileData.materials.push(newMaterial);
 			}
 
 			// Write materials to file
