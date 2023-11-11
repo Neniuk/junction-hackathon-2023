@@ -2,8 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 materialData = {
-	timeData: [],
-	priceData: [],
+	materials: [],
 };
 
 router.post("/", (req, res) => {
@@ -11,20 +10,18 @@ router.post("/", (req, res) => {
 	// and sends it to a javascript function that will render it as a graph on the webpage
 	// The JSON object looks like this:
 	// {
-	//     "time": ["2019-01-01", "2019-01-02", "2019-01-03"],
-	//     "price": [1.0, 2.0, 3.0]
+	// 		"material": "wood",
+	//     "timeData": ["2019-01-01", "2019-01-02", "2019-01-03"],
+	//     "priceData": [1.0, 2.0, 3.0]
 	// }
 
 	// Take information
-	var time = req.body.timeData;
-	var price = req.body.priceData;
-
-	// Store information
-	materialData.timeData = time;
-	materialData.priceData = price;
-
-	// Render the graph
-	// res.render("materialPrices", { time: time, price: price });
+	newMaterial = {
+		material: req.body.material,
+		timeData: req.body.timeData,
+		priceData: req.body.priceData,
+	};
+	materialData.materials.push(newMaterial);
 });
 
 router.get("/", (req, res) => {

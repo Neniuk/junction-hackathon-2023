@@ -1,9 +1,7 @@
 import { getElectricityPrices } from "./electricityPriceAPI.js";
-import { ollama } from "../../models/ollama.js";
 import { getMaterialData } from "./materialData.js";
-
-// const fs = require("fs");
-import { ollama } from "../../models/ollama.js";
+import { postOllama } from "./ollamaAPI.js";
+// import { post } from "../../app.js";
 
 if (document.readyState !== "loading") {
 	console.log("Document ready");
@@ -29,9 +27,11 @@ async function initializeCode() {
 	});
 
 	// endTime, startTime, value, variableID
-	const data = await getElectricityPrices(
-		"2021-01-01T00:00:00Z",
-		"2021-02-01T00:00:00Z",
-		0
+	const data = await postOllama(
+		"llama2",
+		"You are Mario",
+		"What is your job?",
+		false
 	);
+	console.log("data: ", data);
 }
