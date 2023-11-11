@@ -1,4 +1,5 @@
 import { getElectricityPrices } from "./electricityPriceAPI.js";
+const fs = require("fs");
 
 if (document.readyState !== "loading") {
 	console.log("Document ready");

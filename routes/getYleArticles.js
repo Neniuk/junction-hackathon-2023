@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var puppeteer = require("puppeteer");
 const dotenv = require("dotenv");
+const fs = require("fs");
 
 const englishEnergyArticles = "https://yle.fi/news/18-40146";
 const finnishEnergyArticles = "https://yle.fi/uutiset/18-796";
@@ -122,6 +123,18 @@ router.get("/", async function (req, res, next) {
 	allArticles = message.articles.join(" \n\n<new-article>\n\n ");
 	message.articles = allArticles;
 	res.json(message);
+
+	await browser.close();
+
+	// Write articles to file
+	fs.writeFile(
+		"./public/data/text/yleArticles.txt",
+		allArticles,
+		function (err) {
+			if (err) return console.log(err);
+			console.log("Articles written to file");
+		}
+	);
 });
 
 module.exports = router;
