@@ -1,10 +1,9 @@
-import { getElectricityPrices } from "./electricityPriceAPI.js";
-import { ollama } from "../../models/ollama.js";
-import { getMaterialData } from "./materialData.js";
+// import { getElectricityPrices } from "./electricityPriceAPI.js";
+// import { ollama } from "../../models/ollama.js";
+// import { getMaterialData } from "./materialData.js";
 
-// const fs = require("fs");
-import { ollama } from "../../models/ollama.js";
-import { response } from "express";
+// import { ollama } from "../../models/ollama.js";
+// import { response } from "express";
 
 if (document.readyState !== "loading") {
 	console.log("Document ready");
@@ -18,13 +17,22 @@ if (document.readyState !== "loading") {
 
 async function initializeCode() {
 	var button = document.getElementById("input-button");
-	var aiResponseBox = document.getElementById("ai-response");
+	// const materialData = await getMaterialData();
+		var aiResponseBox = document.getElementById("ai-response");
+
 	
 
-	button.addEventListener("click", function () {
-		var textareaContent = document.getElementById("input-area").value;
-		console.log("Textarea content: ", textareaContent);
-	});
+	button.addEventListener("click", async function () {
+        var textareaContent = document.getElementById("input-area").value;
+        console.log("Textarea content: ", textareaContent);
+        
+        const aiResponse = await processInput(textareaContent);
+        aiResponseBox.value = aiResponse;
+    });
+
+	async function processInput(inputText) {
+        return inputText;
+    }
 
 
 	// endTime, startTime, value, variableID
@@ -33,5 +41,8 @@ async function initializeCode() {
 		"2021-02-01T00:00:00Z",
 		0
 	);
+
+
+
 }
 
