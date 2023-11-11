@@ -39,7 +39,4 @@ async function initializeCode() {
 		false
 	);
 	console.log("data: ", data);
-
-	console.log("materialData: ", materialData);
 }
-
