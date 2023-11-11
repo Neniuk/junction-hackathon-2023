@@ -51,25 +51,23 @@ async function initializeCode() {
 	// console.log("materialData: ", materialData.materials.timeData);
 	// console.log("timeData: ", await materialData.materials.timeData);
 
-	
+	console.log("materialData: ", materialData.materials);
 	new Chart(
 		document.getElementById('myChart'),
 		{
 			type: 'line',
-			materialData: {
-				labels: materialData.materials.map(entry => entry.timeData),
-				datasets: [
-					{
-						label: 'Material Price Data',
-						materialData: materialData.materials.map(entry => entry.priceData),
-						fill: false,
-						borderColor: 'rgba(75, 192, 192, 1)',
-						borderWidth: 2,
-						pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-						pointRadius: 5,
-						pointHoverRadius: 8,
-					}
-				]
+			data: {
+				labels: materialData.materials[0].timeData.map(year => parseInt(year)),
+				datasets: materialData.materials.map((material, index) => ({
+					label: index === 0 ? material.material : '',
+					data: material.priceData,
+					fill: false,
+					borderColor: 'rgba(255, 99, 132, 1)', 
+					borderWidth: 2,
+					pointBackgroundColor: 'rgba(255, 99, 132, 1)', 
+					pointRadius: 5,
+					pointHoverRadius: 8,
+				})),
 			},
 			options: {
 				scales: {
@@ -80,28 +78,42 @@ async function initializeCode() {
 							display: true,
 							text: 'Time',
 							font: {
-								size: 18, 
-								weight: 'bold', 
-							},
+								size: 22,
+							}
+						},
+						ticks: {
+							callback: function(value) {
+								return Number.isInteger(value) ? value : '';
+							}
 						}
 					},
 					y: {
 						type: 'linear',
 						title: {
 							display: true,
-							text: 'Material Price Data',
+							text: 'Price',
 							font: {
-								size: 18, 
-								weight: 'bold', 
-							},
+								size: 22,
+							}
 						}
 					}
+				},
+				plugins: {
+					title: {
+						display: true,
+						text: 'Material Price Data',
+						font: {
+							size: 18,
+							weight: 'bold',
+						},
+					},
 				},
 				responsive: true,
 				maintainAspectRatio: false,
 			}
 		}
 	);
+	
 
 const summarizeArticles = async () => {
 	const articles = await getYleArticles();
