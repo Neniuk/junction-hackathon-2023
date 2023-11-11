@@ -35,9 +35,11 @@ router.post("/post", (req, res) => {
 				console.error("Error reading file:", error); // Handle the error
 				return;
 			}
-
+			var fileData = {
+				materials: [],
+			};
 			try {
-				const fileData = JSON.parse(content);
+				fileData = JSON.parse(content);
 				console.log(fileData);
 
 				fileData.materials.push(newMaterial);
