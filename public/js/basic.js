@@ -1,4 +1,7 @@
 import { getElectricityPrices } from "./electricityPriceAPI.js";
+import { ollama } from "../../models/ollama.js";
+import { getMaterialData } from "./materialData.js";
+
 // const fs = require("fs");
 import { ollama } from "../../models/ollama.js";
 import { response } from "express";
@@ -30,10 +33,5 @@ async function initializeCode() {
 		"2021-02-01T00:00:00Z",
 		0
 	);
-
-	// console.log(await data);
-
-	const output = await ollama.generate("why is the sky blue");
-	console.log(output);
 }
 
