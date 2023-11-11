@@ -106,46 +106,60 @@ router.get("/", async function (req, res, next) {
 		references: [],
 	};
 
-	if (fs.existsSync("./public/data/text/yleArticles.json")) {
+	if (fs.existsSync("./public/data/json/yleArticles.json")) {
+		console.log("File exists");
 		message.exists = true;
-		res.json(message);
-		return;
-	}
+		fs.readFile("./public/data/json/yleArticles.json", (error, content) => {
+			if (error) {
+				console.error("Error reading file:", error); // Handle the error
+				res.json(message);
+				return;
+			}
+			const fileData = JSON.parse(content);
+			console.log(fileData);
+			message.articles = fileData.articles;
+			message.references = fileData.references;
+			res.json(message);
+		});
+	} else {
+		const browser = await startBrowser();
 
-	const browser = await startBrowser();
-
-	const articles = await getArticles(
-		browser,
-		englishEnergyArticles,
-		finnishEnergyArticles
-	);
-	console.log(articles);
-	for (let i = 0; i < articles.length; i++) {
-		const articleContent = await getArticleContent(browser, articles[i]);
-		message.articles.push(articleContent);
-		message.references.push(articles[i]);
-	}
-
-	// Join all articles into one single block of text
-	let allArticles = "";
-	for (let i = 0; i < message.articles.length; i++) {
-		message.articles[i] = message.articles[i].join(" \n ");
-	}
-	allArticles = message.articles.join(" \n\n<new-article>\n\n ");
-	message.articles = allArticles;
-	res.json(message);
-
-	await browser.close();
-
-	// Write articles to file
-	fs.writeFile(
-		"./public/data/text/yleArticles.json",
-		JSON.stringify(message),
-		function (err) {
-			if (err) return console.log(err);
-			console.log("Articles written to file");
+		const articles = await getArticles(
+			browser,
+			englishEnergyArticles,
+			finnishEnergyArticles
+		);
+		console.log(articles);
+		for (let i = 0; i < articles.length; i++) {
+			const articleContent = await getArticleContent(
+				browser,
+				articles[i]
+			);
+			message.articles.push(articleContent);
+			message.references.push(articles[i]);
 		}
-	);
+
+		// Join all articles into one single block of text
+		let allArticles = "";
+		for (let i = 0; i < message.articles.length; i++) {
+			message.articles[i] = message.articles[i].join(" \n ");
+		}
+		allArticles = message.articles.join(" \n\n<new-article>\n\n ");
+		message.articles = allArticles;
+		res.json(message);
+
+		await browser.close();
+
+		// Write articles to file
+		fs.writeFile(
+			"./public/data/json/yleArticles.json",
+			JSON.stringify(message),
+			function (err) {
+				if (err) return console.log(err);
+				console.log("Articles written to file");
+			}
+		);
+	}
 });
 
 module.exports = router;
