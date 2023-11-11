@@ -1,4 +1,4 @@
-const postOllama = async (model, context, prompt, stream) => {
+const postOllama = async (model, prompt, stream) => {
 	const req = "http://localhost:11434/api/generate";
 
 	const body = {

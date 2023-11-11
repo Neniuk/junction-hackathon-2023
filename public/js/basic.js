@@ -3,7 +3,7 @@ import { getMaterialData } from "./materialData.js";
 import { postOllama } from "./ollamaAPI.js";
 // import Chart from 'chart.js/auto'
 
-import { getYleArticles } from "./articles.js";
+import { getYleArticles, summarizeArticles } from "./articles.js";
 
 // import { post } from "../../app.js";
 
@@ -31,8 +31,10 @@ async function initializeCode() {
 	});
 
 	// Testing >
-	const articles = await getYleArticles();
-	console.log("articles: ", articles);
+	// const articles = await getYleArticles();
+	// console.log("articles: ", articles);
+	const summarized = await summarizeArticles();
+	console.log("summarized: ", summarized);
 	const materials = await getMaterialData();
 	console.log("materials: ", materials);
 	// < Testing
@@ -56,81 +58,64 @@ async function initializeCode() {
 	// console.log("timeData: ", await materialData.materials.timeData);
 
 	console.log("materialData: ", materialData.materials);
-	new Chart(
-		document.getElementById('myChart'),
-		{
-			type: 'line',
-			data: {
-				labels: materialData.materials[0].timeData.map(year => parseInt(year)),
-				datasets: materialData.materials.map((material, index) => ({
-					label: index === 0 ? material.material : '',
-					data: material.priceData,
-					fill: false,
-					borderColor: 'rgba(255, 99, 132, 1)', 
-					borderWidth: 2,
-					pointBackgroundColor: 'rgba(255, 99, 132, 1)', 
-					pointRadius: 5,
-					pointHoverRadius: 8,
-				})),
-			},
-			options: {
-				scales: {
-					x: {
-						type: 'linear',
-						position: 'bottom',
-						title: {
-							display: true,
-							text: 'Time',
-							font: {
-								size: 22,
-							}
-						},
-						ticks: {
-							callback: function(value) {
-								return Number.isInteger(value) ? value : '';
-							}
-						}
-					},
-					y: {
-						type: 'linear',
-						title: {
-							display: true,
-							text: 'Price',
-							font: {
-								size: 22,
-							}
-						}
-					}
-				},
-				plugins: {
+	new Chart(document.getElementById("myChart"), {
+		type: "line",
+		data: {
+			labels: materialData.materials[0].timeData.map((year) =>
+				parseInt(year)
+			),
+			datasets: materialData.materials.map((material, index) => ({
+				label: index === 0 ? material.material : "",
+				data: material.priceData,
+				fill: false,
+				borderColor: "rgba(255, 99, 132, 1)",
+				borderWidth: 2,
+				pointBackgroundColor: "rgba(255, 99, 132, 1)",
+				pointRadius: 5,
+				pointHoverRadius: 8,
+			})),
+		},
+		options: {
+			scales: {
+				x: {
+					type: "linear",
+					position: "bottom",
 					title: {
 						display: true,
-						text: 'Material Price Data',
+						text: "Time",
 						font: {
-							size: 18,
-							weight: 'bold',
+							size: 22,
+						},
+					},
+					ticks: {
+						callback: function (value) {
+							return Number.isInteger(value) ? value : "";
 						},
 					},
 				},
-				responsive: true,
-				maintainAspectRatio: false,
-			}
-		}
-	);
-	
-
-	const summarizeArticles = async () => {
-		const articles = await getYleArticles();
-		console.log("articles: ", articles);
-
-		const summarized = await postOllama(
-			"llama2",
-			articles.articles,
-			"According to the context provided later, give a short prediction of the energy market and its prices according to the articles in the context. ## CONTEXT ## " +
-				articles.articles +
-				" ## END CONTEXT ##",
-			true
-		);
-		return await summarized;
-	};
+				y: {
+					type: "linear",
+					title: {
+						display: true,
+						text: "Price",
+						font: {
+							size: 22,
+						},
+					},
+				},
+			},
+			plugins: {
+				title: {
+					display: true,
+					text: "Material Price Data",
+					font: {
+						size: 18,
+						weight: "bold",
+					},
+				},
+			},
+			responsive: true,
+			maintainAspectRatio: false,
+		},
+	});
 }
