@@ -3,6 +3,7 @@ import { getMaterialData } from "./materialData.js";
 import { postOllama } from "./ollamaAPI.js";
 // import Chart from 'chart.js/auto'
 
+import { getYleArticles } from "./articles.js";
 
 // import { post } from "../../app.js";
 
@@ -33,6 +34,8 @@ async function initializeCode() {
 		return inputText;
 	}
 
+	const summarized = await summarizeArticles();
+
 	// endTime, startTime, value, variableID
 	// const data = await postOllama(
 	// 	"llama2",
@@ -51,11 +54,11 @@ new Chart(
 		{
 		  type: 'line',
 		  materialData: {
-			labels: materialData.materials.map(entry => entry.timeData), 
+			labels: materialData.map(entry => entry.timeData), 
 			datasets: [
 			  {
 				label: 'Material Price Data',
-				materialData: materialData.materials.map(entry => entry.priceData),
+				materialData: materialData.map(entry => entry.priceData),
 				fill: false,
 				borderColor: 'rgba(75, 192, 192, 1)',
 				borderWidth: 2,
@@ -67,24 +70,37 @@ new Chart(
 		  },
 		  options: {
 			scales: {
-			  x: {
-				type: 'linear',
-				position: 'bottom',
-				title: {
-				  display: true,
-				  text: 'Time'
-				}
-			  },
-			  y: {
-				type: 'linear',
-				title: {
-				  display: true,
-				  text: 'Price'
-				}
-			  }
-			}
-		  }
-		}
-	  );
-	  
+				x: {
+					type: "linear",
+					position: "bottom",
+					title: {
+						display: true,
+						text: "Time",
+					},
+				},
+				y: {
+					type: "linear",
+					title: {
+						display: true,
+						text: "Price",
+					},
+				},
+			},
+		},
+	});
 }
+
+const summarizeArticles = async () => {
+	const articles = await getYleArticles();
+	console.log("articles: ", articles);
+
+	const summarized = await postOllama(
+		"llama2",
+		articles.articles,
+		"According to the context provided later, give a short prediction of the energy market and its prices according to the articles in the context. ## CONTEXT ## " +
+			articles.articles +
+			" ## END CONTEXT ##",
+		true
+	);
+	return await summarized;
+};
