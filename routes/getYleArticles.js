@@ -100,11 +100,20 @@ const getArticleContent = async (browser, articleLink) => {
 };
 
 router.get("/", async function (req, res, next) {
-	const browser = await startBrowser();
 	message = {
+		exists: false,
 		articles: [],
 		references: [],
 	};
+
+	if (fs.existsSync("./public/data/text/yleArticles.json")) {
+		message.exists = true;
+		res.json(message);
+		return;
+	}
+
+	const browser = await startBrowser();
+
 	const articles = await getArticles(
 		browser,
 		englishEnergyArticles,
@@ -130,8 +139,8 @@ router.get("/", async function (req, res, next) {
 
 	// Write articles to file
 	fs.writeFile(
-		"./public/data/text/yleArticles.txt",
-		allArticles,
+		"./public/data/text/yleArticles.json",
+		JSON.stringify(message),
 		function (err) {
 			if (err) return console.log(err);
 			console.log("Articles written to file");
