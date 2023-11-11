@@ -7,7 +7,7 @@ const fs = require("fs");
 const englishEnergyArticles = "https://yle.fi/news/18-40146";
 const finnishEnergyArticles = "https://yle.fi/uutiset/18-796";
 // const customSearch = "https://haku.yle.fi/?query=" + query + "&type=article"
-const numOfArticles = 3;
+const numOfArticles = 5;
 
 async function startBrowser() {
 	let browser;
@@ -63,6 +63,11 @@ const getArticles = async (browser, articleSearchLink1, articleSearchLink2) => {
 		propertyJsHandles2.map((handle) => handle.jsonValue())
 	);
 	// console.log(hrefs);
+
+	// Only take maximum 5 articles from each href array
+	// Handle the case where there are less than numOfArticles articles
+	hrefs.splice(numOfArticles);
+	hrefs2.splice(numOfArticles);
 
 	const articleLinks = hrefs.concat(hrefs2);
 
@@ -130,6 +135,7 @@ router.get("/", async function (req, res, next) {
 			finnishEnergyArticles
 		);
 		console.log(articles);
+
 		for (let i = 0; i < articles.length; i++) {
 			const articleContent = await getArticleContent(
 				browser,
