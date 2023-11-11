@@ -39,7 +39,7 @@ router.post("/post", (req, res) => {
 				materials: [],
 			};
 			try {
-				// fileData = JSON.parse(content);
+				fileData = JSON.parse(content);
 				console.log(fileData);
 
 				fileData.materials.push(newMaterial);
