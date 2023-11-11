@@ -132,6 +132,6 @@ dist
 # Environment variables
 .env
 
-# Saved text files
-public/data/text/*
-!public/data/text/.gitkeep
+# Saved json files
+public/data/json/*
+!public/data/json/.gitkeep
