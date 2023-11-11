@@ -103,6 +103,7 @@ router.get("/", async function (req, res, next) {
 	const browser = await startBrowser();
 	message = {
 		articles: [],
+		references: [],
 	};
 	const articles = await getArticles(
 		browser,
@@ -113,6 +114,7 @@ router.get("/", async function (req, res, next) {
 	for (let i = 0; i < articles.length; i++) {
 		const articleContent = await getArticleContent(browser, articles[i]);
 		message.articles.push(articleContent);
+		message.references.push(articles[i]);
 	}
 
 	// Join all articles into one single block of text

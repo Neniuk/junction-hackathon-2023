@@ -1,6 +1,7 @@
 import { getElectricityPrices } from "./electricityPriceAPI.js";
 import { getMaterialData } from "./materialData.js";
 import { postOllama } from "./ollamaAPI.js";
+
 // import { post } from "../../app.js";
 
 if (document.readyState !== "loading") {
@@ -15,7 +16,7 @@ if (document.readyState !== "loading") {
 
 async function initializeCode() {
 	var button = document.getElementById("input-button");
-	// const materialData = await getMaterialData();
+	const materialData = await getMaterialData();
 	var aiResponseBox = document.getElementById("ai-response");
 
 	button.addEventListener("click", async function () {

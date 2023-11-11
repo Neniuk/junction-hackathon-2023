@@ -1,27 +1,20 @@
 var express = require("express");
 var router = express.Router();
 
-materialData = {
+const materialData = {
 	materials: [],
 };
 
-router.post("/", (req, res) => {
-	// The endpoint takes in a JSON object with time and price data from a python program,
-	// and sends it to a javascript function that will render it as a graph on the webpage
-	// The JSON object looks like this:
-	// {
-	// 		"material": "wood",
-	//     "timeData": ["2019-01-01", "2019-01-02", "2019-01-03"],
-	//     "priceData": [1.0, 2.0, 3.0]
-	// }
-
-	// Take information
+router.post("/post", (req, res) => {
+	console.log("Test");
+	console.log(req.body);
 	newMaterial = {
 		material: req.body.material,
 		timeData: req.body.timeData,
 		priceData: req.body.priceData,
 	};
 	materialData.materials.push(newMaterial);
+	res.json(materialData);
 });
 
 router.get("/", (req, res) => {
