@@ -99,13 +99,19 @@ async function initializeCode() {
 					x: {
 						title: {
 							display: true,
-							text: 'Time'
+							text: 'Time',
+							font: {
+								size: 25
+							},
 						},
 					},
 					y: {
 						title: {
 							display: true,
-							text: 'Price'
+							text: 'Price',
+							font: {
+								size: 25
+							},
 						},
 						suggestedMin: 0,
 						suggestedMax: 20000,
