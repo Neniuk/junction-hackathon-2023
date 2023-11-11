@@ -35,9 +35,18 @@ router.post("/post", (req, res) => {
 				console.error("Error reading file:", error); // Handle the error
 				return;
 			}
-			const fileData = JSON.parse(content);
-			console.log(fileData);
-			fileData.materials.push(newMaterial);
+
+			try {
+				const fileData = JSON.parse(content);
+				console.log(fileData);
+
+				fileData.materials.push(newMaterial);
+			} catch (error) {
+				console.log(error);
+				fileData = {
+					materials: [],
+				};
+			}
 
 			// Write materials to file
 			fs.writeFile(

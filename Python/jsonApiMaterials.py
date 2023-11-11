@@ -1,30 +1,15 @@
 import pandas as pd
 from statsmodels.tsa.arima.model import ARIMA
 import json
-import requests
+from postMaterials import postMaterials
+import os
 
-url = 'http://127.0.0.1:3000/materials'
+dirname = os.path.dirname(__file__)
 
-# myobj = {
-#     "material" : "",
-#     "timeData" : [],
-#     "priceData" : [],
-# }
-# body = json.dumps(myobj)
-# headers = {'Content-Type': 'application/json'}
-# #req = requests.post(url, headers=headers, data=body, verify=False)
-#
-# if req.status_code == 200:
-#     # Print the response JSON after the request is complete
-#     print(req.json())
-# else:
-#     print(f"Request failed with status code {req.status_code}")
-
-
-
+url = 'http://127.0.0.1:3000/materials/post'
 
 # iron Ore
-file_path_Iron = 'dataIron.json'
+file_path_Iron = os.path.join(dirname, 'dataIron.json')
 with open(file_path_Iron, 'r') as file:
     dataIron = json.load(file)
 
@@ -45,7 +30,7 @@ prediction_data_ironOre = {
 }
 
 # Nickel
-file_path_Nickel = 'dataNickel.json'
+file_path_Nickel = os.path.join(dirname, 'dataNickel.json')
 with open(file_path_Nickel, 'r') as file:
     dataNickel = json.load(file)
 
@@ -66,7 +51,7 @@ prediction_data_Nickel = {
 }
 
 # Copper
-file_path_Copper = 'dataCopper.json'
+file_path_Copper = os.path.join(dirname, 'dataCopper.json')
 with open(file_path_Copper, 'r') as file:
     dataCopper = json.load(file)
 
@@ -85,6 +70,10 @@ prediction_data_Copper = {
     'timeData': [(df_Copper.index[-1] + pd.DateOffset(months=i + 1)).strftime('%B %Y') for i in range(12)],
     'priceData': predicted_prices_Copper.tolist()
 }
+
+postMaterials(prediction_data_ironOre, url)
+postMaterials(prediction_data_Nickel, url)
+postMaterials(prediction_data_Copper, url)
 
 for i in range(12):
     monthIron = df_Iron.index[-1] + pd.DateOffset(months=i + 1)
