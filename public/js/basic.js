@@ -1,4 +1,4 @@
-// import { getElectricityPrices } from "./electricityPriceAPI.js";
+import { getElectricityPrices } from "./electricityPriceAPI.js";
 // import { ollama } from "../../models/ollama.js";
 // import { getMaterialData } from "./materialData.js";
 
