@@ -131,7 +131,7 @@ async function initializeCode() {
 						display: true,
 						text: 'Material Price Data',
 						font: {
-							size: 18,
+							size: 28,
 							weight: 'bold',
 						},
 					},
