@@ -30,6 +30,9 @@ async function initializeCode() {
 		aiResponseBox.value = aiResponse;
 	});
 
+	const articles = await getYleArticles();
+	// console.log("articles: ", articles);
+
 	async function processInput(inputText) {
 		return inputText;
 	}
