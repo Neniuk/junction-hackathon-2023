@@ -48,12 +48,30 @@ router.post("/post", (req, res) => {
 					console.log("Articles written to file");
 				}
 			);
+			res.json(fileData);
 		});
 	}
 });
 
 router.get("/", (req, res) => {
-	res.json(materialData);
+	if (fs.existsSync("./public/data/json/materials.json")) {
+		console.log("File exists");
+		fs.readFile("./public/data/json/materials.json", (error, content) => {
+			if (error) {
+				console.error("Error reading file:", error); // Handle the error
+				return;
+			}
+			const fileData = JSON.parse(content);
+			console.log(fileData);
+			res.json(fileData);
+		});
+	} else {
+		console.log("File does not exist");
+		const materialData = {
+			materials: [],
+		};
+		res.json(materialData);
+	}
 });
 
 module.exports = router;
