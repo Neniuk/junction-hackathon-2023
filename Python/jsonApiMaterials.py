@@ -4,7 +4,11 @@ import json
 import requests
 
 url = 'http://127.0.0.1:3000/materials/post'
-myobj = {"material" : None, 'timeData' : None, 'priceData' : None}
+myobj = {
+    "material" : "", 
+    "timeData" : [], 
+    "priceData" : [],
+}
 body = json.dumps(myobj)
 headers = {'Content-Type': 'application/json'}
 req = requests.post(url, headers=headers, data=body)
