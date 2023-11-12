@@ -3,8 +3,8 @@ import { getMaterialData } from "./materialData.js";
 import { postOllama } from "./ollamaAPI.js";
 // import Chart from 'chart.js/auto'
 
-import { getYleArticles } from "./articles.js";
-
+import { getYleArticles, summarizeArticles } from "./articles.js";
+const summaryDiv = document.getElementById("summary");
 // import { post } from "../../app.js";
 
 if (document.readyState !== "loading") {
@@ -30,11 +30,22 @@ async function initializeCode() {
 		aiResponseBox.value = aiResponse;
 	});
 
+	const summary = await summarizeArticles();
+	summaryDiv.innerHTML = await summary;
+
+	// Testing >
+	// const articles = await getYleArticles();
+	// console.log("articles: ", articles);
+
+	const materials = await getMaterialData();
+	console.log("materials: ", materials);
+	// < Testing
+
 	async function processInput(inputText) {
 		return inputText;
 	}
 
-	const summarized = await summarizeArticles();
+	// const summarized = await summarizeArticles();
 
 	// endTime, startTime, value, variableID
 	// const data = await postOllama(
@@ -44,65 +55,93 @@ async function initializeCode() {
 	// 	false
 	// );
 	// console.log("data: ", data);
-	 
+
 	// console.log("materialData: ", materialData.materials.timeData);
 	// console.log("timeData: ", await materialData.materials.timeData);
 
-	
-	new Chart(
-		document.getElementById('myChart'),
-		{
-			type: 'line',
-			materialData: {
-				labels: materialData.materials.map(entry => entry.timeData),
-				datasets: [
-					{
-						label: 'Material Price Data',
-						materialData: materialData.materials.map(entry => entry.priceData),
+	console.log("materialData: ", materialData.materials);
+	new Chart(document.getElementById("myChart"), {
+		type: "line",
+		data: {
+			labels: materialData.materials[0].timeData,
+			datasets: materialData.materials
+				.reverse()
+				.map((material, index) => {
+					let color;
+					switch (index) {
+						case 0:
+							color = "red";
+							break;
+						case 1:
+							color = "blue";
+							break;
+						case 2:
+							color = "lime";
+							break;
+						// Add more cases for additional materials
+
+						default:
+							color = getRandomColor(); // Use a fallback color if more materials than expected
+							break;
+					}
+
+					return {
+						label: material.material,
+						data: material.priceData,
 						fill: false,
-						borderColor: 'rgba(75, 192, 192, 1)',
+						backgroundColor: color,
+						borderColor: color,
 						borderWidth: 2,
-						pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+						pointBackgroundColor: color,
 						pointRadius: 5,
 						pointHoverRadius: 8,
-					}
-				]
-			},
-			options: {
-				scales: {
-					x: {
-						type: 'linear',
-						position: 'bottom',
-						title: {
-							display: true,
-							text: 'Time'
-						}
+					};
+				}),
+		},
+		options: {
+			scales: {
+				x: {
+					title: {
+						display: true,
+						text: "Time",
+						font: {
+							size: 25,
+						},
 					},
-					y: {
-						type: 'linear',
-						title: {
-							display: true,
-							text: 'Price'
-						}
-					}
-				}
-			}
-		}
-	);
-
-const summarizeArticles = async () => {
-	const articles = await getYleArticles();
-	console.log("articles: ", articles);
-
-	const summarized = await postOllama(
-		"llama2",
-		articles.articles,
-		"According to the context provided later, give a short prediction of the energy market and its prices according to the articles in the context. ## CONTEXT ## " +
-			articles.articles +
-			" ## END CONTEXT ##",
-		true
-	);
-	return await summarized;
-};
-
+				},
+				y: {
+					title: {
+						display: true,
+						text: "Price",
+						font: {
+							size: 25,
+						},
+					},
+					suggestedMin: 0,
+					suggestedMax: 20000,
+				},
+			},
+			plugins: {
+				legend: {
+					display: true,
+					position: "top",
+					labels: {
+						font: {
+							size: 14,
+						},
+					},
+				},
+				title: {
+					display: true,
+					text: "Price",
+					font: {
+						size: 28,
+						weight: "bold",
+					},
+				},
+			},
+			responsive: true,
+			maintainAspectRatio: false,
+		},
+	});
 }

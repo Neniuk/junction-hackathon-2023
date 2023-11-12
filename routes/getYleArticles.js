@@ -7,7 +7,7 @@ const fs = require("fs");
 const englishEnergyArticles = "https://yle.fi/news/18-40146";
 const finnishEnergyArticles = "https://yle.fi/uutiset/18-796";
 // const customSearch = "https://haku.yle.fi/?query=" + query + "&type=article"
-const numOfArticles = 3;
+const numOfArticles = 5;
 
 async function startBrowser() {
 	let browser;
@@ -64,6 +64,11 @@ const getArticles = async (browser, articleSearchLink1, articleSearchLink2) => {
 	);
 	// console.log(hrefs);
 
+	// Only take maximum 5 articles from each href array
+	// Handle the case where there are less than numOfArticles articles
+	hrefs.splice(numOfArticles);
+	hrefs2.splice(numOfArticles);
+
 	const articleLinks = hrefs.concat(hrefs2);
 
 	return articleLinks;
@@ -106,46 +111,63 @@ router.get("/", async function (req, res, next) {
 		references: [],
 	};
 
-	if (fs.existsSync("./public/data/text/yleArticles.json")) {
+	if (fs.existsSync("./public/data/json/yleArticles.json")) {
+		console.log("File exists");
 		message.exists = true;
-		res.json(message);
-		return;
-	}
+		fs.readFile("./public/data/json/yleArticles.json", (error, content) => {
+			if (error) {
+				console.error("Error reading file:", error); // Handle the error
+				res.json(message);
+				return;
+			}
+			const fileData = JSON.parse(content);
+			// console.log(fileData);
+			message.articles = fileData.articles;
+			message.references = fileData.references;
+			res.json(message);
+		});
+	} else {
+		const browser = await startBrowser();
 
-	const browser = await startBrowser();
+		const articles = await getArticles(
+			browser,
+			englishEnergyArticles,
+			finnishEnergyArticles
+		);
+		// console.log(articles);
 
-	const articles = await getArticles(
-		browser,
-		englishEnergyArticles,
-		finnishEnergyArticles
-	);
-	console.log(articles);
-	for (let i = 0; i < articles.length; i++) {
-		const articleContent = await getArticleContent(browser, articles[i]);
-		message.articles.push(articleContent);
-		message.references.push(articles[i]);
-	}
-
-	// Join all articles into one single block of text
-	let allArticles = "";
-	for (let i = 0; i < message.articles.length; i++) {
-		message.articles[i] = message.articles[i].join(" \n ");
-	}
-	allArticles = message.articles.join(" \n\n<new-article>\n\n ");
-	message.articles = allArticles;
-	res.json(message);
-
-	await browser.close();
-
-	// Write articles to file
-	fs.writeFile(
-		"./public/data/text/yleArticles.json",
-		JSON.stringify(message),
-		function (err) {
-			if (err) return console.log(err);
-			console.log("Articles written to file");
+		for (let i = 0; i < articles.length; i++) {
+			const articleContent = await getArticleContent(
+				browser,
+				articles[i]
+			);
+			message.articles.push(articleContent);
+			message.references.push(articles[i]);
 		}
-	);
+
+		// Join all articles into one single block of text
+		let allArticles = "";
+		for (let i = 0; i < message.articles.length; i++) {
+			message.articles[i] = message.articles[i].join(" \n ");
+		}
+		allArticles = message.articles.join(" \n\n<new-article>\n\n ");
+		message.articles = allArticles;
+		message.articles = decodeURIComponent(message.articles);
+		console.log(message.articles);
+		// res.json(message);
+
+		await browser.close();
+
+		// Write articles to file
+		fs.writeFile(
+			"./public/data/json/yleArticles.json",
+			JSON.stringify(message),
+			function (err) {
+				if (err) return console.log(err);
+				console.log("Articles written to file");
+			}
+		);
+	}
 });
 
 module.exports = router;
