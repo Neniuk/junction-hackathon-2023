@@ -16,7 +16,7 @@ const summarizeArticles = async () => {
 
 	const summarized = await postOllama(
 		"llama2",
-		"According to the context provided later, give a short prediction of the energy market and its prices according to the articles in the context. ## CONTEXT ## " +
+		"According to the context provided later, give a short prediction of the energy market and its prices according to the articles in the context. The response should only be a short one paragraph, but still be informative and accurate. ## NOTE ## Do not make up data, if you do not know then say so. ## END NOTE ##  ## CONTEXT ## " +
 			articles.articles +
 			" ## END CONTEXT ##",
 		true

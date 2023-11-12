@@ -1,3 +1,5 @@
+const summary = document.getElementById("summary");
+
 const postOllama = async (model, prompt, stream) => {
 	const req = "http://localhost:11434/api/generate";
 
@@ -19,22 +21,31 @@ const postOllama = async (model, prompt, stream) => {
 	const reader = res.body.getReader();
 	const decoder = new TextDecoder();
 
+	if (summary.innerHTML != "") {
+		summary.innerHTML = "";
+	}
+
 	while (true) {
 		const { done, value } = await reader.read();
 		if (done) {
 			console.log("done");
 			return;
 		}
-		console.log("value: " + value);
+		// console.log("value: " + value);
 
 		// Decode the chunk and append it to the DOM
 		const chunkText = decoder.decode(value);
+		const resText = chunkText.response;
+
 		console.log("chunkText: " + chunkText);
+		console.log("resText: " + resText);
+
+		// Add to DOM (div with id "summary") the final should be one choseive text block
+		summary.innerHTML += resText;
 	}
+	// const data = await res.json();
 
-	const data = await res.json();
-
-	return data;
+	// return data;
 };
 
 export { postOllama };
