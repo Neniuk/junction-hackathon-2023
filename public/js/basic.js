@@ -5,6 +5,7 @@ import { postOllama } from "./ollamaAPI.js";
 
 import { getYleArticles, summarizeArticles } from "./articles.js";
 const summaryDiv = document.getElementById("summary");
+const summaryReferences = documen.getElementById("summary-references");
 // import { post } from "../../app.js";
 
 if (document.readyState !== "loading") {
@@ -30,8 +31,9 @@ async function initializeCode() {
 		aiResponseBox.value = aiResponse;
 	});
 
-	const summary = await summarizeArticles();
-	summaryDiv.innerHTML = await summary;
+	const references = await summarizeArticles();
+	summaryReferences.innerHTML = references.join("<br>");
+	summaryDiv.appendChild(summaryReferences);
 
 	// Testing >
 	// const articles = await getYleArticles();
