@@ -74,10 +74,9 @@ async function initializeCode() {
 						case 2:
 							color = 'lime';
 							break;
-						// Add more cases for additional materials
 	
 						default:
-							color = getRandomColor(); // Use a fallback color if more materials than expected
+							color = getRandomColor(); 
 							break;
 					}
 	
