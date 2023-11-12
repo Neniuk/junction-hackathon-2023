@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 const fs = require("fs");
 
 router.post("/post", async (req, res, next) => {
-	const success = await writeSummary(req.body.summary);
+	const success = await writeSummary(req.body);
 	res.json({ success: success });
 });
 

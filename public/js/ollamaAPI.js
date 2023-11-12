@@ -77,7 +77,7 @@ const postOllama = async (model, prompt, stream) => {
 		summary.innerHTML += resText;
 		writeable.summary += resText;
 	}
-
+	console.log("writeable: ", writeable);
 	const success = await postSummary(writeable);
 	console.log("success: ", success);
 
