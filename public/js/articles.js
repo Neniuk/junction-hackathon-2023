@@ -21,7 +21,7 @@ const summarizeArticles = async () => {
 			" ## END CONTEXT ##",
 		true
 	);
-	return await summarized;
+	return articles.references;
 };
 
 export { getYleArticles, summarizeArticles };

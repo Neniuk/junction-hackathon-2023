@@ -5,6 +5,7 @@ import { postOllama } from "./ollamaAPI.js";
 
 import { getYleArticles, summarizeArticles } from "./articles.js";
 const summaryDiv = document.getElementById("summary");
+const summaryReferences = document.getElementById("summary-references");
 // import { post } from "../../app.js";
 
 if (document.readyState !== "loading") {
@@ -28,10 +29,10 @@ async function initializeCode() {
 
 	// 	const aiResponse = await processInput(textareaContent);
 	// 	aiResponseBox.value = aiResponse;
-	
 
-	// const summary = await summarizeArticles();
-	// summaryDiv.innerHTML = await summary;
+	// const references = await summarizeArticles();
+	// summaryReferences.innerHTML = references.join("<br>");
+	// summaryDiv.appendChild(summaryReferences);
 
 	// Testing >
 	// const articles = await getYleArticles();
@@ -78,9 +79,9 @@ async function initializeCode() {
 						case 2:
 							color = "#A3CEF1";
 							break;
-	
+
 						default:
-							color = getRandomColor(); 
+							color = getRandomColor();
 							break;
 					}
 
@@ -143,4 +144,8 @@ async function initializeCode() {
 			maintainAspectRatio: false,
 		},
 	});
+
+	const references = await summarizeArticles();
+	summaryReferences.innerHTML = references.join("<br>");
+	summaryDiv.appendChild(summaryReferences);
 }

@@ -8,6 +8,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var yleRouter = require("./routes/getYleArticles");
 var materialRouter = require("./routes/materialData");
+var summaryRouter = require("./routes/writeSummary");
 
 var app = express();
 
@@ -21,6 +22,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/yle", yleRouter);
 app.use("/materials", materialRouter);
+app.use("/summary", summaryRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
