@@ -30,9 +30,9 @@ async function initializeCode() {
 	// 	const aiResponse = await processInput(textareaContent);
 	// 	aiResponseBox.value = aiResponse;
 
-	const references = await summarizeArticles();
-	summaryReferences.innerHTML = references.join("<br>");
-	summaryDiv.appendChild(summaryReferences);
+	// const references = await summarizeArticles();
+	// summaryReferences.innerHTML = references.join("<br>");
+	// summaryDiv.appendChild(summaryReferences);
 
 	// Testing >
 	// const articles = await getYleArticles();
@@ -144,4 +144,8 @@ async function initializeCode() {
 			maintainAspectRatio: false,
 		},
 	});
+
+	const references = await summarizeArticles();
+	summaryReferences.innerHTML = references.join("<br>");
+	summaryDiv.appendChild(summaryReferences);
 }
