@@ -1,6 +1,10 @@
 const summary = document.getElementById("summary");
 const summaryReferences = document.getElementById("summary-references");
-import { postSummary, getSummaryExists } from "./writeSummaryAPI.js";
+import {
+	postSummary,
+	getSummaryExists,
+	getSummary,
+} from "./writeSummaryAPI.js";
 
 const postOllama = async (model, prompt, stream) => {
 	const req = "http://localhost:11434/api/generate";
@@ -14,13 +18,16 @@ const postOllama = async (model, prompt, stream) => {
 		"./public/data/json/summary.json"
 	);
 
-	if (summaryExists) {
-		const summary = await postSummary(writeable);
-		console.log("summary: ", summary);
+	console.log("summaryExists: ", summaryExists);
+
+	if (summaryExists.exists) {
+		console.log("Exists!");
+		const summaryElement = await getSummary();
+		console.log("summary: ", summaryElement);
 		summary.innerHTML = "";
 		summaryReferences.innerHTML = "";
 
-		summary.innerHTML = summary.summary;
+		summary.innerHTML = summaryElement.summary;
 
 		return;
 	}
@@ -33,6 +40,7 @@ const postOllama = async (model, prompt, stream) => {
 	};
 
 	console.log("req: ", req);
+	console.log("body: ", body);
 	const res = await fetch(req, {
 		method: "POST",
 		headers: {
@@ -69,7 +77,7 @@ const postOllama = async (model, prompt, stream) => {
 		summary.innerHTML += resText;
 		writeable.summary += resText;
 	}
-
+	console.log("writeable: ", writeable);
 	const success = await postSummary(writeable);
 	console.log("success: ", success);
 
