@@ -5,7 +5,7 @@ import { postOllama } from "./ollamaAPI.js";
 
 import { getYleArticles, summarizeArticles } from "./articles.js";
 const summaryDiv = document.getElementById("summary");
-const summaryReferences = documen.getElementById("summary-references");
+const summaryReferences = document.getElementById("summary-references");
 // import { post } from "../../app.js";
 
 if (document.readyState !== "loading") {

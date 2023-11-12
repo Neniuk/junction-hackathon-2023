@@ -1,6 +1,6 @@
 const summary = document.getElementById("summary");
 const summaryReferences = document.getElementById("summary-references");
-const { postSummary, getSummaryExists } = "./writeSummary.js";
+const { postSummary, getSummaryExists } = "./writeSummaryAPI.js";
 
 const postOllama = async (model, prompt, stream) => {
 	const req = "http://localhost:11434/api/generate";
