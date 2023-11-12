@@ -1,5 +1,5 @@
 const postSummary = async (summary) => {
-	const req = "http://localhost:3000/summary";
+	const req = "http://localhost:3000/summary/post";
 
 	console.log("req: ", req);
 	const res = await fetch(req, {
