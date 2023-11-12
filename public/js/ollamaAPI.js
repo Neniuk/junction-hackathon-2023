@@ -40,6 +40,7 @@ const postOllama = async (model, prompt, stream) => {
 	};
 
 	console.log("req: ", req);
+	console.log("body: ", body);
 	const res = await fetch(req, {
 		method: "POST",
 		headers: {
