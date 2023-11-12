@@ -3,15 +3,14 @@ var router = express.Router();
 const dotenv = require("dotenv");
 const fs = require("fs");
 
-router.post("/", async (req, res, next) => {
-	writeSummary(req.body.summary);
-	res.json({ success: true });
+router.post("/post", async (req, res, next) => {
+	const success = await writeSummary(req.body.summary);
+	res.json({ success: success });
 });
 
 router.get("/", async (req, res, next) => {
-	const fileExists = await fileExists(req.body.path);
-
-	res.json(summary);
+	const exists = await fileExists(req.body.path);
+	res.json({ exists: exists });
 });
 
 const writeSummary = async (summary) => {
@@ -22,10 +21,11 @@ const writeSummary = async (summary) => {
 		(error) => {
 			if (error) {
 				console.error("Error writing file:", error); // Handle the error
-				return;
+				return false;
 			}
 
 			console.log("File written successfully");
+			return true;
 		}
 	);
 };
