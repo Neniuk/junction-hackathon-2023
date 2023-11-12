@@ -77,7 +77,7 @@ async function initializeCode() {
 							color = "#6096BA";
 							break;
 						case 2:
-							color = "#A3CEF1";
+							color = "#A3CeF1";
 							break;
 
 						default:
