@@ -121,7 +121,7 @@ router.get("/", async function (req, res, next) {
 				return;
 			}
 			const fileData = JSON.parse(content);
-			console.log(fileData);
+			// console.log(fileData);
 			message.articles = fileData.articles;
 			message.references = fileData.references;
 			res.json(message);
@@ -134,7 +134,7 @@ router.get("/", async function (req, res, next) {
 			englishEnergyArticles,
 			finnishEnergyArticles
 		);
-		console.log(articles);
+		// console.log(articles);
 
 		for (let i = 0; i < articles.length; i++) {
 			const articleContent = await getArticleContent(
@@ -152,7 +152,9 @@ router.get("/", async function (req, res, next) {
 		}
 		allArticles = message.articles.join(" \n\n<new-article>\n\n ");
 		message.articles = allArticles;
-		res.json(message);
+		message.articles = decodeURIComponent(message.articles);
+		console.log(message.articles);
+		// res.json(message);
 
 		await browser.close();
 
