@@ -134,4 +134,5 @@ dist
 
 # Saved json files
 public/data/json/*
+!public/data/json/*.json
 !public/data/json/.gitkeep
