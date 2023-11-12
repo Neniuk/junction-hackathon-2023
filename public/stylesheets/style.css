@@ -2,8 +2,8 @@ body {
 	padding: 50px;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 	display: flex;
-	align-items: right;
-	justify-content: right;
+	align-items: center;
+	justify-content: center;
 	background-color: #f4f4f6;
 }
 
@@ -11,7 +11,7 @@ a {
 	color: #00b7ff;
 }
 
-#input-area {
+/* #input-area {
 	width: 100%;
 	max-width: 350px;
 	padding: 2px;
@@ -24,9 +24,9 @@ a {
 	overflow-y: hidden;
 	position: relative;
 	z-index: 2;
-}
+} */
 
-#ai-response {
+/* #ai-response {
 	position: absolute;
 	background-color: #f4f4f6;
 	border: 0px;
@@ -35,9 +35,9 @@ a {
 	margin-top: 100px;
 	margin-right: 26px;
 	font-size: 20px;
-}
+} */
 
-button {
+/* button {
 	padding: 22px;
 	box-sizing: border-box;
 	border-radius: 20px;
@@ -49,9 +49,9 @@ button {
 	background-color: #f4f4f6;
 	position: relative;
 	z-index: 2;
-}
+} */
 
-.rectangle1 {
+/* .rectangle1 {
 	position: absolute;
 	border: 3px solid;
 	border-radius: 5px;
@@ -59,7 +59,7 @@ button {
 	width: 450px;
 	background-color: rgba(85, 85, 85, 0) fff;
 	z-index: 1;
-}
+} */
 
 #summary {
 	position: absolute;
@@ -79,5 +79,5 @@ p {
 }
 
 #myChart {
-	margin-right: 390px;
+	margin-left: -600px;
 }

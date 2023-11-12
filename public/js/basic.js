@@ -22,28 +22,28 @@ async function initializeCode() {
 	const materialData = await getMaterialData();
 	var aiResponseBox = document.getElementById("ai-response");
 
-	button.addEventListener("click", async function () {
-		var textareaContent = document.getElementById("input-area").value;
-		console.log("Textarea content: ", textareaContent);
+	// button.addEventListener("click", async function () {
+	// 	var textareaContent = document.getElementById("input-area").value;
+	// 	console.log("Textarea content: ", textareaContent);
 
-		const aiResponse = await processInput(textareaContent);
-		aiResponseBox.value = aiResponse;
-	});
+	// 	const aiResponse = await processInput(textareaContent);
+	// 	aiResponseBox.value = aiResponse;
+	
 
-	const summary = await summarizeArticles();
-	summaryDiv.innerHTML = await summary;
+	// const summary = await summarizeArticles();
+	// summaryDiv.innerHTML = await summary;
 
 	// Testing >
 	// const articles = await getYleArticles();
 	// console.log("articles: ", articles);
 
-	const materials = await getMaterialData();
-	console.log("materials: ", materials);
+	// const materials = await getMaterialData();
+	// console.log("materials: ", materials);
 	// < Testing
 
-	async function processInput(inputText) {
-		return inputText;
-	}
+	// async function processInput(inputText) {
+	// 	return inputText;
+	// }
 
 	// const summarized = await summarizeArticles();
 
