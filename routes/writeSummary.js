@@ -9,6 +9,11 @@ router.post("/post", async (req, res, next) => {
 });
 
 router.get("/", async (req, res, next) => {
+	const summary = getSummary();
+	res.json(summary);
+});
+
+router.post("/exists", async (req, res, next) => {
 	const exists = await fileExists(req.body.path);
 	res.json({ exists: exists });
 });
@@ -35,6 +40,20 @@ const fileExists = async (path) => {
 		return true;
 	} else {
 		return false;
+	}
+};
+
+const getSummary = () => {
+	console.log("getSummary");
+	try {
+		const summaryRaw = fs.readFileSync("./public/data/json/summary.json");
+		console.log("summaryRaw: ", summaryRaw);
+		const summary = JSON.parse(summaryRaw);
+		console.log(summary);
+		return summary;
+	} catch (error) {
+		console.error("Error reading file:", error);
+		return {};
 	}
 };
 
