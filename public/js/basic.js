@@ -132,7 +132,7 @@ async function initializeCode() {
 				},
 				title: {
 					display: true,
-					text: "Price",
+					text: "Materials",
 					font: {
 						size: 28,
 						weight: "bold",
