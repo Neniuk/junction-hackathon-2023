@@ -4,7 +4,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #EEE6FD;
+	background-color: #7AA4FF;
 }
 
 a {
@@ -15,7 +15,7 @@ a {
 	position: absolute;
 	height: 115%;
 	width: 1000px;
-	background-color: #f4f4f6;
+	background-color: white;
 	z-index: 0;
 	margin-right: 40%;
 	
