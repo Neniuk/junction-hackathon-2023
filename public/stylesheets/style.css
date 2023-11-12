@@ -4,7 +4,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #DEE2FF;
+	background-color: #dee2ff;
 }
 
 a {
@@ -53,12 +53,12 @@ a {
 
 #summary {
 	position: absolute;
-	height: 115%;
-	width: 1000px;
-	background-color: #EEE6FD;
-	z-index: 0;
-	margin-right: 40%;
-	
+	font-size: 10px;
+}
+
+#summary-references {
+	position: absolute;
+	font-size: 10px;
 }
 
 p {
@@ -68,7 +68,7 @@ p {
 }
 
 #myChart {
-	margin-left: -820px ;	
+	margin-left: -820px;
 	position: relative;
 	z-index: 1;
 }
