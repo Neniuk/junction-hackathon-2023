@@ -1,10 +1,10 @@
 body {
-	padding: 50px;
+	padding: 1%;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #f4f4f6;
+	background-color: #DEE2FF;
 }
 
 a {
@@ -51,35 +51,14 @@ a {
 	z-index: 2;
 } */
 
-/* .rectangle1 {
-	position: absolute;
-	border: 3px solid;
-	border-radius: 5px;
-	height: 900px;
-	width: 450px;
-	background-color: rgba(85, 85, 85, 0) fff;
-	z-index: 1;
-} */
-
-/* #summary {
-	position: absolute;
-	border: 3px solid;
-	border-radius: 5px;
-	height: 200px;
-	width: 450px;
-	background-color: rgba(85, 85, 85, 0) fff;
-	z-index: 1;
-	margin-right: 1300px;
-} */
-
 #summary {
 	position: absolute;
-	font-size: 10px;
-}
-
-#summary-references {
-	position: absolute;
-	font-size: 10px;
+	height: 115%;
+	width: 1000px;
+	background-color: #EEE6FD;
+	z-index: 0;
+	margin-right: 40%;
+	
 }
 
 p {
@@ -89,5 +68,7 @@ p {
 }
 
 #myChart {
-	margin-left: -600px;
+	margin-left: -820px ;	
+	position: relative;
+	z-index: 1;
 }

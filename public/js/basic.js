@@ -71,13 +71,13 @@ async function initializeCode() {
 					let color;
 					switch (index) {
 						case 0:
-							color = "red";
+							color = "#274C77";
 							break;
 						case 1:
-							color = "blue";
+							color = "#6096BA";
 							break;
 						case 2:
-							color = "lime";
+							color = "#A3CEF1";
 							break;
 
 						default:
@@ -133,7 +133,7 @@ async function initializeCode() {
 				},
 				title: {
 					display: true,
-					text: "Price",
+					text: "Materials",
 					font: {
 						size: 28,
 						weight: "bold",
